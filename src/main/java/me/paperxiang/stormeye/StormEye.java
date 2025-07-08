@@ -2,6 +2,7 @@ package me.paperxiang.stormeye;
 import me.paperxiang.stormeye.listeners.CombatListener;
 import me.paperxiang.stormeye.listeners.InventoryListener;
 import me.paperxiang.stormeye.listeners.PlayerListener;
+import me.paperxiang.stormeye.utils.InventoryUtils;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.slf4j.Logger;
 public final class StormEye extends JavaPlugin {
@@ -15,6 +16,7 @@ public final class StormEye extends JavaPlugin {
     }
     @Override
     public void onEnable() {
+        InventoryUtils.init();
         CombatListener.init();
         InventoryListener.init();
         PlayerListener.init();

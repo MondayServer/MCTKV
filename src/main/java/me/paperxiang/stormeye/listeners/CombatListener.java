@@ -17,7 +17,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ProjectileHitEvent;
-import org.bukkit.util.Vector;
 public final class CombatListener implements Listener {
     @SuppressWarnings("UnstableApiUsage")
     private static final Tag<BlockType> PROJECTILE_BREAKS = RegistryAccess.registryAccess().getRegistry(RegistryKey.BLOCK).getTag(BlockTypeTagKeys.create(Key.key("storm_eye", "projectile_breaks")));
@@ -41,6 +40,7 @@ public final class CombatListener implements Listener {
                 if (!(arrow instanceof Trident) && arrow.getPierceLevel() <= 0) {
                     arrow.remove();
                 } else {
+                    //TODO fix stuck in ghost block
                     Bukkit.getScheduler().runTask(StormEye.getInstance(), () -> arrow.teleport(arrow.getLocation().clone().add(0, -0.1, 0)));
                 }
             }

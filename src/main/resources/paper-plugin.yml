@@ -9,7 +9,5 @@ dependencies:
   server:
     ProtocolLib:
       load: BEFORE
-    CraftEngine:
-      load: BEFORE
 description: The eye of the storm
 website: https://fireworksstudio.github.io

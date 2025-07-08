@@ -2,6 +2,7 @@ package me.paperxiang.stormeye.listeners;
 import io.papermc.paper.event.entity.EntityPortalReadyEvent;
 import me.paperxiang.stormeye.StormEye;
 import me.paperxiang.stormeye.utils.ComponentUtils;
+import me.paperxiang.stormeye.utils.InventoryUtils;
 import net.kyori.adventure.chat.ChatType;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
@@ -17,6 +18,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityPortalEnterEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.persistence.PersistentDataType;
 public final class PlayerListener implements Listener {
     private static final PlayerListener instance = new PlayerListener();
@@ -25,6 +28,10 @@ public final class PlayerListener implements Listener {
     private PlayerListener() {}
     public static void init() {
         Bukkit.getPluginManager().registerEvents(instance, StormEye.getInstance());
+    }
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onPlayerJoin(PlayerJoinEvent event) {
+        InventoryUtils.init(event.getPlayer());
     }
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onPlayerDeath(PlayerDeathEvent event) {
@@ -57,5 +64,9 @@ public final class PlayerListener implements Listener {
             player.getWorld().sendMessage(Component.text("成功撤离"), ChatType.EMOTE_COMMAND.bind(player.displayName().hoverEvent(HoverEvent.showEntity(Key.key("minecraft:player"), player.getUniqueId(), player.displayName())).clickEvent(ClickEvent.suggestCommand("/tell " + player.getName() + " "))));
             player.showWinScreen();
         }
+    }
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onPlayerQuit(PlayerQuitEvent event) {
+        InventoryUtils.fina(event.getPlayer());
     }
 }
