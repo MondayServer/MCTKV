@@ -1,4 +1,5 @@
 package me.paperxiang.stormeye.listeners;
+import de.tr7zw.nbtapi.NBT;
 import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import io.papermc.paper.registry.TypedKey;
@@ -40,8 +41,9 @@ public final class CombatListener implements Listener {
                 if (!(arrow instanceof Trident) && arrow.getPierceLevel() <= 0) {
                     arrow.remove();
                 } else {
-                    //TODO fix stuck in ghost block
-                    Bukkit.getScheduler().runTask(StormEye.getInstance(), () -> arrow.teleport(arrow.getLocation().clone().add(0, -0.1, 0)));
+                    Bukkit.getScheduler().runTask(StormEye.getInstance(), () -> NBT.modify(arrow, nbt -> {
+                        nbt.setBoolean("inGround", false);
+                    }));
                 }
             }
         }
