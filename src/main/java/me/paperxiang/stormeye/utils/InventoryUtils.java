@@ -1,6 +1,7 @@
 package me.paperxiang.stormeye.utils;
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.events.ListenerOptions;
 import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketContainer;
@@ -33,25 +34,25 @@ public final class InventoryUtils {
         UNREVEALED.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay().hideTooltip(true).build());
     }
     public static void init() {
-        ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(StormEye.getInstance(), ListenerPriority.NORMAL, PacketType.Play.Server.OPEN_WINDOW) {
+        ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(StormEye.getInstance(), ListenerPriority.NORMAL, List.of(PacketType.Play.Server.OPEN_WINDOW), ListenerOptions.ASYNC) {
             @Override
             public void onPacketSending(PacketEvent event) {
                 openWindows.get(event.getPlayer().getUniqueId()).open(event.getPacket().getIntegers().readSafely(0));
             }
         });
-        ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(StormEye.getInstance(), ListenerPriority.NORMAL, PacketType.Play.Server.CLOSE_WINDOW) {
+        ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(StormEye.getInstance(), ListenerPriority.NORMAL, List.of(PacketType.Play.Server.CLOSE_WINDOW), ListenerOptions.ASYNC) {
             @Override
             public void onPacketSending(PacketEvent event) {
                 openWindows.get(event.getPlayer().getUniqueId()).open(0);
             }
         });
-        ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(StormEye.getInstance(), ListenerPriority.NORMAL, PacketType.Play.Client.CLOSE_WINDOW) {
+        ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(StormEye.getInstance(), ListenerPriority.NORMAL, List.of(PacketType.Play.Client.CLOSE_WINDOW), ListenerOptions.ASYNC) {
             @Override
             public void onPacketReceiving(PacketEvent event) {
                 openWindows.get(event.getPlayer().getUniqueId()).open(0);
             }
         });
-        ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(StormEye.getInstance(), ListenerPriority.NORMAL, PacketType.Play.Server.WINDOW_ITEMS, PacketType.Play.Server.SET_SLOT) {
+        ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(StormEye.getInstance(), ListenerPriority.NORMAL, List.of(PacketType.Play.Server.WINDOW_ITEMS, PacketType.Play.Server.SET_SLOT), ListenerOptions.SYNC) {
             @Override
             public void onPacketSending(PacketEvent event) {
                 final PacketContainer packet = event.getPacket();
@@ -78,7 +79,7 @@ public final class InventoryUtils {
                 }
             }
         });
-        ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(StormEye.getInstance(), ListenerPriority.NORMAL, PacketType.Play.Client.WINDOW_CLICK) {
+        ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(StormEye.getInstance(), ListenerPriority.NORMAL, List.of(PacketType.Play.Client.WINDOW_CLICK), ListenerOptions.SYNC) {
             @Override
             public void onPacketReceiving(PacketEvent event) {
                 final PacketContainer packet = event.getPacket();
@@ -87,7 +88,7 @@ public final class InventoryUtils {
                 if (packet.getIntegers().readSafely(0) == window.id && packet.getIntegers().readSafely(1) == window.state) {
                     final int slot = packet.getShorts().readSafely(0);
                     final Inventory inventory = player.getOpenInventory().getTopInventory();
-                    if (slot >= 0 && slot < inventory.getSize() && !window.revealed(slot)) {
+                    if (inventory.getHolder() instanceof Container && slot >= 0 && slot < inventory.getSize() && !window.revealed(slot)) {
                         event.setCancelled(true);
                         player.setItemOnCursor(player.getItemOnCursor());
                         final PacketContainer cancel = new PacketContainer(PacketType.Play.Server.SET_SLOT);
