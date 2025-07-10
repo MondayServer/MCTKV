@@ -17,15 +17,18 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.persistence.PersistentDataType;
 @SuppressWarnings("UnstableApiUsage")
 public final class EnchantmentsWindow extends FastInv {
     private final ItemStack item;
+    private final InventoryView source;
     private static final ItemStack BORDER_0 = new ItemStack(Material.GLASS_PANE);
     private static final ItemStack BORDER_1 = new ItemStack(Material.CYAN_STAINED_GLASS_PANE);
     private static final ItemStack BORDER_2 = new ItemStack(Material.RED_STAINED_GLASS_PANE);
@@ -56,14 +59,15 @@ public final class EnchantmentsWindow extends FastInv {
         DEACTIVATED.setData(DataComponentTypes.ITEM_NAME, Component.text("未激活"));
         UNACTIVATABLE.setData(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplay.tooltipDisplay().hideTooltip(true).build());
     }
-    public EnchantmentsWindow(ItemStack item) {
+    public EnchantmentsWindow(InventoryView source, ItemStack item) {
         super(inv -> Bukkit.createInventory(inv, InventoryType.CHEST, Component.text("物品附魔")));
         this.item = item;
+        this.source = source.getTopInventory().getHolder() instanceof EnchantmentsWindow enchantmentsWindow ? enchantmentsWindow.source : source.getMenuType() == null ? null : source;
         final int slots = writeDefaultEnchantmentSlots();
         enchantments = new Enchantment[slots];
         levels = new int[slots];
         activationSlots = new ActivationSlot[slots];
-        setItem(10, item, UIUtils.CANCEL_CLICK);
+        updateItem();
         setItems(BORDER_0_SLOTS, BORDER_0, UIUtils.CANCEL_CLICK);
         setItems(BORDER_1_SLOTS, BORDER_1, UIUtils.CANCEL_CLICK);
         setItems(BORDER_2_SLOTS, BORDER_2, UIUtils.CANCEL_CLICK);
@@ -139,10 +143,49 @@ public final class EnchantmentsWindow extends FastInv {
     private static int inventoryEnchantmentSlot(int slot) {
         return slot + 14;
     }
+    private static int enchantmentSlot(int inventorySlot) {
+        return inventorySlot - 14;
+    }
     @Override
     protected void onClick(InventoryClickEvent event) {
         if (event.getClickedInventory() != event.getInventory()) {
-            event.setCancelled(false);
+            switch (event.getAction()) {
+                case COLLECT_TO_CURSOR -> {
+                    final ItemStack cursor = event.getCursor();
+                    int updateFlags = 0;
+                    for (int i = 0; i < enchantments.length; i++) {
+                        if (cursor.isSimilar(getInventory().getItem(inventoryEnchantmentSlot(i)))) {
+                            if (isActivated(i)) {
+                                updateFlags = -1;
+                                break;
+                            } else {
+                                updateFlags |= 1 << i;
+                            }
+                        }
+                    }
+                    if (updateFlags < 0) {
+                        event.setCancelled(true);
+                    } else {
+                        event.setCancelled(false);
+                        for (int i = 0; i < enchantments.length; i++) {
+                            if ((updateFlags & 1 << i) > 0) {
+                                final int slot = i;
+                                Bukkit.getScheduler().runTask(StormEye.getInstance(), () -> updateEnchantment(slot));
+                            }
+                        }
+                    }
+                }
+                case MOVE_TO_OTHER_INVENTORY -> {
+                    final boolean compatible = checkCompatible(event.getCurrentItem());
+                    event.setCancelled(!compatible);
+                    if (compatible) {
+                        final int slot = enchantmentSlot(getInventory().firstEmpty());
+                        Bukkit.getScheduler().runTask(StormEye.getInstance(), () -> updateEnchantment(slot));
+                    }
+                }
+                case UNKNOWN -> event.setCancelled(true);
+                default -> event.setCancelled(false);
+            }
         }
     }
     @Override
@@ -152,12 +195,21 @@ public final class EnchantmentsWindow extends FastInv {
             int slot = entry.getKey();
             if (event.getView().convertSlot(slot) == slot) {
                 if (checkCompatible(entry.getValue())) {
-                    Bukkit.getScheduler().runTask(StormEye.getInstance(), () -> updateEnchantment(slot - 14));
+                    Bukkit.getScheduler().runTask(StormEye.getInstance(), () -> updateEnchantment(enchantmentSlot(slot)));
                 } else {
                     event.getNewItems().remove(slot);
                 }
             }
         }
+    }
+    @Override
+    protected void onClose(InventoryCloseEvent event) {
+        if (source != null) {
+            Bukkit.getScheduler().runTask(StormEye.getInstance(), () -> event.getPlayer().openInventory(source));
+        }
+    }
+    private void updateItem() {
+        setItem(10, item, UIUtils.CANCEL_CLICK);
     }
     private boolean isActivated(int slot) {
         return (activationFlags & 1 << slot) > 0;
@@ -174,6 +226,7 @@ public final class EnchantmentsWindow extends FastInv {
                 item.removeEnchantment(enchantments[slot]);
                 addStoredEnchantment(enchantments[slot], levels[slot]);
             }
+            updateItem();
         }
     }
     private final class ActivationSlot implements Consumer<InventoryClickEvent> {
@@ -195,6 +248,7 @@ public final class EnchantmentsWindow extends FastInv {
             enchantments[slot] = null;
             levels[slot] = 0;
         });
+        updateItem();
     }
     private final class EnchantmentSlot implements Consumer<InventoryClickEvent> {
         private final int slot;

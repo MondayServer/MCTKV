@@ -20,7 +20,7 @@ public final class InventoryListener implements Listener {
     public void onInventoryClick(InventoryClickEvent event) {
         if (event.getClick() == ClickType.SWAP_OFFHAND && event.getClickedInventory() instanceof PlayerInventory && !Utils.isEmpty(event.getCurrentItem())) {
             event.setCancelled(true);
-            Bukkit.getScheduler().runTask(StormEye.getInstance(), () -> new EnchantmentsWindow(event.getCurrentItem()).open((Player) event.getWhoClicked()));
+            Bukkit.getScheduler().runTask(StormEye.getInstance(), () -> new EnchantmentsWindow(event.getView(), event.getCurrentItem()).open((Player) event.getWhoClicked()));
         }
     }
 }
