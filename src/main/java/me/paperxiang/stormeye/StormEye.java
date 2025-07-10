@@ -1,4 +1,5 @@
 package me.paperxiang.stormeye;
+import fr.mrmicky.fastinv.FastInvManager;
 import me.paperxiang.stormeye.listeners.CombatListener;
 import me.paperxiang.stormeye.listeners.InventoryListener;
 import me.paperxiang.stormeye.listeners.PlayerListener;
@@ -16,6 +17,7 @@ public final class StormEye extends JavaPlugin {
     }
     @Override
     public void onEnable() {
+        FastInvManager.register(this);
         InventoryUtils.init();
         CombatListener.init();
         InventoryListener.init();
