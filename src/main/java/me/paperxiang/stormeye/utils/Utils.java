@@ -6,17 +6,26 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.function.Predicate;
 import me.paperxiang.stormeye.StormEye;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.inventory.ItemStack;
 public final class Utils {
+    public static final Location HUB = Bukkit.getWorld("world").getSpawnLocation();
     private static final BlockFace[] neighbors = new BlockFace[]{BlockFace.WEST, BlockFace.EAST, BlockFace.DOWN, BlockFace.UP, BlockFace.NORTH, BlockFace.SOUTH};
     private static final NamespacedKey FLOPS = new NamespacedKey(StormEye.getInstance(), "flops");
     private static final NamespacedKey FLOPS_TRANSIENT = new NamespacedKey(StormEye.getInstance(), "flops_transient");
     private static final NamespacedKey HASHES = new NamespacedKey(StormEye.getInstance(), "hashes");
     private Utils() {}
+    public static void init() {
+        final World world = Bukkit.getWorld("world");
+        world.setSimulationDistance(2);
+        world.setViewDistance(2);
+    }
     public static boolean isEmpty(ItemStack itemStack) {
         return itemStack == null || itemStack.isEmpty();
     }

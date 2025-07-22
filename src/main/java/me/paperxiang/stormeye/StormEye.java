@@ -2,8 +2,12 @@ package me.paperxiang.stormeye;
 import fr.mrmicky.fastinv.FastInvManager;
 import me.paperxiang.stormeye.listeners.CombatListener;
 import me.paperxiang.stormeye.listeners.InventoryListener;
+import me.paperxiang.stormeye.listeners.MissionListener;
 import me.paperxiang.stormeye.listeners.PlayerListener;
+import me.paperxiang.stormeye.listeners.WorldListener;
 import me.paperxiang.stormeye.utils.InventoryUtils;
+import me.paperxiang.stormeye.utils.Mission;
+import me.paperxiang.stormeye.utils.Utils;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.slf4j.Logger;
 public final class StormEye extends JavaPlugin {
@@ -18,14 +22,19 @@ public final class StormEye extends JavaPlugin {
     @Override
     public void onEnable() {
         FastInvManager.register(this);
+        Utils.init();
         InventoryUtils.init();
         CombatListener.init();
         InventoryListener.init();
+        MissionListener.init();
         PlayerListener.init();
+        WorldListener.init();
         logInfo("StormEye initialized.");
+        System.out.println(Utils.HUB);
     }
     @Override
     public void onDisable() {
+        Mission.fina();
         instance = null;
         logInfo("StormEye finalized.");
     }

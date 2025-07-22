@@ -55,8 +55,11 @@ public final class InventoryUtils {
         ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(StormEye.getInstance(), ListenerPriority.NORMAL, List.of(PacketType.Play.Server.WINDOW_ITEMS, PacketType.Play.Server.SET_SLOT), ListenerOptions.SYNC) {
             @Override
             public void onPacketSending(PacketEvent event) {
-                final PacketContainer packet = event.getPacket();
                 final Player player = event.getPlayer();
+                if (!Mission.isInMission(player.getUniqueId())) {
+                    return;
+                }
+                final PacketContainer packet = event.getPacket();
                 final Window window = openWindows.get(player.getUniqueId());
                 if (packet.getIntegers().readSafely(0) == window.id) {
                     window.updateState(packet.getIntegers().readSafely(1));
@@ -82,8 +85,11 @@ public final class InventoryUtils {
         ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(StormEye.getInstance(), ListenerPriority.NORMAL, List.of(PacketType.Play.Client.WINDOW_CLICK), ListenerOptions.SYNC) {
             @Override
             public void onPacketReceiving(PacketEvent event) {
-                final PacketContainer packet = event.getPacket();
                 final Player player = event.getPlayer();
+                if (!Mission.isInMission(player.getUniqueId())) {
+                    return;
+                }
+                final PacketContainer packet = event.getPacket();
                 final Window window = openWindows.get(player.getUniqueId());
                 if (packet.getIntegers().readSafely(0) == window.id && packet.getIntegers().readSafely(1) == window.state) {
                     final int slot = packet.getShorts().readSafely(0);

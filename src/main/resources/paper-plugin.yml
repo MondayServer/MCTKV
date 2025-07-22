@@ -11,5 +11,11 @@ dependencies:
       load: BEFORE
     NBTAPI:
       load: BEFORE
+    Citizens:
+      load: BEFORE
+    CraftEngine:
+      load: BEFORE
+    Multiverse-Core:
+      load: BEFORE
 description: The eye of the storm
 website: https://fireworksstudio.github.io

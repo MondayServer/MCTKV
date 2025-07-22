@@ -40,9 +40,9 @@ public final class EnchantmentsWindow extends FastInv {
     private static final int[] DEFAULT_UNAVAILABLE = new int[] {3, 12, 14, 15, 16, 17, 21};
     private static final int[] DEFAULT_UNACTIVATABLE = new int[] {5, 6, 7, 8};
     private static final ItemStack UNAVAILABLE_SLOT = new ItemStack(Material.ENCHANTED_BOOK);
-    private static final ItemStack ACTIVATED = new ItemStack(Material.PURPLE_STAINED_GLASS_PANE);
-    private static final ItemStack DEACTIVATED = new ItemStack(Material.BLUE_STAINED_GLASS_PANE);
-    private static final ItemStack UNACTIVATABLE = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
+    private static final ItemStack ACTIVATED = new ItemStack(Material.CRYING_OBSIDIAN);
+    private static final ItemStack DEACTIVATED = new ItemStack(Material.LAPIS_BLOCK);
+    private static final ItemStack UNACTIVATABLE = new ItemStack(Material.OBSIDIAN);
     private final Enchantment[] enchantments;
     private final int[] levels;
     private int activationFlags = 0;
