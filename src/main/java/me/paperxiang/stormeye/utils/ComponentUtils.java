@@ -5,8 +5,18 @@ import it.unimi.dsi.fastutil.floats.FloatBidirectionalIterator;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.minimessage.ParsingException;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 public final class ComponentUtils {
     private ComponentUtils() {}
+    public static Component parse(String string) {
+        try {
+            return MiniMessage.miniMessage().deserializeOrNull(string);
+        } catch (ParsingException exception) {
+            return LegacyComponentSerializer.legacySection().deserializeOrNull(string);
+        }
+    }
     public static Component renderProgressBar(String segment, int segments, TextColor color, TextColor progressedColor, float progress) {
         return new ProgressBar(segment, segments, color, Float2ObjectSortedMaps.singleton(progress, progressedColor)).render(progress);
     }

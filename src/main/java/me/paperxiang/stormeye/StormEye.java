@@ -1,5 +1,7 @@
 package me.paperxiang.stormeye;
 import fr.mrmicky.fastinv.FastInvManager;
+import me.paperxiang.stormeye.i18n.I18n;
+import me.paperxiang.stormeye.i18n.StormTranslator;
 import me.paperxiang.stormeye.listeners.CombatListener;
 import me.paperxiang.stormeye.listeners.InventoryListener;
 import me.paperxiang.stormeye.listeners.MissionListener;
@@ -22,6 +24,8 @@ public final class StormEye extends JavaPlugin {
     @Override
     public void onEnable() {
         FastInvManager.register(this);
+        I18n.init();
+        StormTranslator.init();
         Utils.init();
         InventoryUtils.init();
         CombatListener.init();
