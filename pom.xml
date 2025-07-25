@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>me.paperxiang</groupId>
-    <artifactId>stormeye</artifactId>
+    <artifactId>theannihilation</artifactId>
     <version>0.1.0</version>
     <packaging>jar</packaging>
 
-    <name>stormeye</name>
+    <name>The Annihilation</name>
 
     <properties>
         <java.version>21</java.version>
@@ -102,7 +102,7 @@
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
-            <version>1.21.7-R0.1-SNAPSHOT</version>
+            <version>1.21.8-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -154,8 +154,14 @@
         </dependency>
         <dependency>
             <groupId>net.momirealms</groupId>
+            <artifactId>craft-engine-core</artifactId>
+            <version>0.0.60</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.momirealms</groupId>
             <artifactId>craft-engine-bukkit</artifactId>
-            <version>0.0.59</version>
+            <version>0.0.60</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

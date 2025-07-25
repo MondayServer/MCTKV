@@ -1,7 +1,15 @@
 underground:
-  - mooncore_caverns
+  mooncore_caverns:
+    chunk-x: [-4, 4]
+    chunk-z: [-4, 4]
 surface:
-  - fatelands
+  fatelands:
+    chunk-x: [-4, 4]
+    chunk-z: [-4, 4]
 nether:
-  - blighted_citadel
-  - resurrection_labs
+  blighted_citadel:
+    chunk-x: [-4, 4]
+    chunk-z: [-4, 4]
+  resurrection_labs:
+    chunk-x: [-4, 4]
+    chunk-z: [-4, 4]

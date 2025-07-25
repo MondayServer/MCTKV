@@ -1,9 +1,9 @@
-name: StormEye
+name: TheAnnihilation
 version: '0.1.0'
-main: me.paperxiang.stormeye.StormEye
-bootstrapper: me.paperxiang.stormeye.StormEyeBootstrap
-api-version: '1.21.5'
-prefix: StormEye
+main: me.paperxiang.theannihilation.TheAnnihilation
+bootstrapper: me.paperxiang.theannihilation.TheAnnihilationBootstrap
+api-version: '1.21.8'
+prefix: TheAnnihilation
 authors: [ Paper_Xiang, CreepyCreeperSSS ]
 dependencies:
   server:
@@ -17,5 +17,5 @@ dependencies:
       load: BEFORE
     Multiverse-Core:
       load: BEFORE
-description: The eye of the storm
+description: The annihilation
 website: https://fireworksstudio.github.io
