@@ -24,7 +24,6 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
-import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
@@ -41,7 +40,6 @@ public final class Utils {
     private static final NamespacedKey HASHES = new NamespacedKey(TheAnnihilation.getInstance(), "hashes");
     private static final NamespacedKey LOOT_TABLE = new NamespacedKey(TheAnnihilation.getInstance(), "loot_table");
     private static final EnumMap<MapType, ConcurrentHashMap<String, MapInfo>> maps = new EnumMap<>(MapType.class);
-    private static final CommandSender IGNORED = Bukkit.createCommandSender(component -> {});
     private Utils() {}
     public static void init() {
         final World world = Bukkit.getWorld("world");
@@ -95,12 +93,10 @@ public final class Utils {
             for (final BlockState blockState : chunk.getTileEntities(block -> block.getState() instanceof TileStateInventoryHolder && block.getState() instanceof Lootable, false)) {
                 final TileStateInventoryHolder tileState = (TileStateInventoryHolder) blockState;
                 if (tileState.getPersistentDataContainer().has(LOOT_TABLE, PersistentDataType.STRING)) {
-                    //final Location location = tileState.getLocation();
                     NBT.modify(tileState, nbt -> {
                         nbt.removeKey("Items");
                         nbt.removeKey("item");
                     });
-                    //Bukkit.dispatchCommand(IGNORED, "execute in " + world.getKey() + " run data remove block " + location.getBlockX() + " " + location.getBlockY() + " " + location.getBlockZ() + " Items");
                     ((Lootable) blockState).setLootTable(Bukkit.getLootTable(NamespacedKey.fromString(tileState.getPersistentDataContainer().get(LOOT_TABLE, PersistentDataType.STRING))));
                 }
             }

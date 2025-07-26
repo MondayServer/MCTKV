@@ -42,6 +42,6 @@ public final class PlayerListener implements Listener {
         final Player player = event.getPlayer();
         final UUID uuid = player.getUniqueId();
         Mission.getMission(uuid).removePlayer(uuid);
-        InventoryUtils.fina(event.getPlayer());
+        InventoryUtils.fina(player);
     }
 }
