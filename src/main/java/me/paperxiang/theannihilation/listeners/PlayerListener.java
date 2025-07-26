@@ -1,8 +1,10 @@
 package me.paperxiang.theannihilation.listeners;
+import java.util.UUID;
 import me.paperxiang.theannihilation.TheAnnihilation;
 import me.paperxiang.theannihilation.utils.InventoryUtils;
 import me.paperxiang.theannihilation.utils.Mission;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -37,6 +39,9 @@ public final class PlayerListener implements Listener {
     }
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerQuit(PlayerQuitEvent event) {
+        final Player player = event.getPlayer();
+        final UUID uuid = player.getUniqueId();
+        Mission.getMission(uuid).removePlayer(uuid);
         InventoryUtils.fina(event.getPlayer());
     }
 }

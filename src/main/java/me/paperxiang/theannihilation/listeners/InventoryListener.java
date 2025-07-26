@@ -7,7 +7,7 @@ import me.paperxiang.theannihilation.utils.Utils;
 import net.momirealms.craftengine.bukkit.api.BukkitAdaptors;
 import net.momirealms.craftengine.core.item.ItemBuildContext;
 import org.bukkit.Bukkit;
-import org.bukkit.NamespacedKey;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -15,8 +15,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.world.LootGenerateEvent;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.persistence.PersistentDataType;
 public final class InventoryListener implements Listener {
     private static final InventoryListener instance = new InventoryListener();
     private InventoryListener() {}
@@ -34,9 +34,13 @@ public final class InventoryListener implements Listener {
     public void onLootGenerate(LootGenerateEvent event) {
         final ItemBuildContext context = event.getEntity() instanceof final Player player ? ItemBuildContext.of(BukkitAdaptors.adapt(player)) : ItemBuildContext.EMPTY;
         event.getLoot().replaceAll(source -> ItemUtils.generateCustom(source, context));
-        if (event.getInventoryHolder() instanceof final TileStateInventoryHolder tileState) {
+        final InventoryHolder holder = event.getInventoryHolder();
+        if (holder instanceof final TileStateInventoryHolder tileState) {
             Utils.markLootTable(event.getLootTable(), tileState.getPersistentDataContainer());
             tileState.update();
+        }
+        if (holder instanceof final Entity entity) {
+            Utils.markLootTable(event.getLootTable(), entity.getPersistentDataContainer());
         }
     }
 }

@@ -6,6 +6,7 @@ import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
+import com.destroystokyo.paper.loottable.LootableEntityInventory;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
@@ -17,9 +18,10 @@ import java.util.concurrent.ConcurrentHashMap;
 import me.paperxiang.theannihilation.TheAnnihilation;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.block.Container;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.BlockInventoryHolder;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitTask;
 public final class InventoryUtils {
@@ -64,7 +66,7 @@ public final class InventoryUtils {
                 if (packet.getIntegers().readSafely(0) == window.id) {
                     window.updateState(packet.getIntegers().readSafely(1));
                     final Inventory inventory = player.getOpenInventory().getTopInventory();
-                    if (inventory.getHolder() instanceof Container) {
+                    if (mayHide(inventory)) {
                         if (packet.getType() == PacketType.Play.Server.WINDOW_ITEMS) {
                             final List<ItemStack> items = packet.getItemListModifier().readSafely(0);
                             for (int i = 0; i < inventory.getSize(); i++) {
@@ -94,7 +96,7 @@ public final class InventoryUtils {
                 if (packet.getIntegers().readSafely(0) == window.id && packet.getIntegers().readSafely(1) == window.state) {
                     final int slot = packet.getShorts().readSafely(0);
                     final Inventory inventory = player.getOpenInventory().getTopInventory();
-                    if (inventory.getHolder() instanceof Container && slot >= 0 && slot < inventory.getSize() && !window.revealed(slot)) {
+                    if (mayHide(inventory) && slot >= 0 && slot < inventory.getSize() && !window.revealed(slot)) {
                         event.setCancelled(true);
                         player.setItemOnCursor(player.getItemOnCursor());
                         final PacketContainer cancel = new PacketContainer(PacketType.Play.Server.SET_SLOT);
@@ -116,6 +118,10 @@ public final class InventoryUtils {
                 }
             }
         });
+    }
+    private static boolean mayHide(Inventory inventory) {
+        final InventoryHolder holder = inventory.getHolder();
+        return holder instanceof BlockInventoryHolder || holder instanceof LootableEntityInventory;
     }
     private static final class Window {
         private int id = 0, state = 0;

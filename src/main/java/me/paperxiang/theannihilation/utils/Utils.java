@@ -1,12 +1,12 @@
 package me.paperxiang.theannihilation.utils;
-import com.destroystokyo.paper.loottable.LootableInventory;
+import com.destroystokyo.paper.loottable.LootableEntityInventory;
+import de.tr7zw.nbtapi.NBT;
 import io.papermc.paper.block.TileStateInventoryHolder;
 import io.papermc.paper.math.BlockPosition;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.HashSet;
 import java.util.List;
@@ -27,6 +27,7 @@ import org.bukkit.block.BlockState;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Entity;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.loot.LootTable;
 import org.bukkit.loot.Lootable;
@@ -90,13 +91,25 @@ public final class Utils {
      * @param maxZ max chunk z, exclusive
      */
     public static void reLoot(World world, int minX, int maxX, int minZ, int maxZ) {
-        for (Chunk chunk : getChunks(world, minX, maxX, minZ, maxZ)) {
-            for (BlockState blockState : chunk.getTileEntities(block -> block.getState() instanceof TileStateInventoryHolder && block.getState() instanceof Lootable, false)) {
+        for (final Chunk chunk : getChunks(world, minX, maxX, minZ, maxZ)) {
+            for (final BlockState blockState : chunk.getTileEntities(block -> block.getState() instanceof TileStateInventoryHolder && block.getState() instanceof Lootable, false)) {
                 final TileStateInventoryHolder tileState = (TileStateInventoryHolder) blockState;
                 if (tileState.getPersistentDataContainer().has(LOOT_TABLE, PersistentDataType.STRING)) {
-                    final Location location = tileState.getLocation();
-                    Bukkit.dispatchCommand(IGNORED, "execute in " + world.getKey() + " run data remove block " + location.getBlockX() + " " + location.getBlockY() + " " + location.getBlockZ() + " Items");
+                    //final Location location = tileState.getLocation();
+                    NBT.modify(tileState, nbt -> {
+                        nbt.removeKey("Items");
+                        nbt.removeKey("item");
+                    });
+                    //Bukkit.dispatchCommand(IGNORED, "execute in " + world.getKey() + " run data remove block " + location.getBlockX() + " " + location.getBlockY() + " " + location.getBlockZ() + " Items");
                     ((Lootable) blockState).setLootTable(Bukkit.getLootTable(NamespacedKey.fromString(tileState.getPersistentDataContainer().get(LOOT_TABLE, PersistentDataType.STRING))));
+                }
+            }
+            for (final Entity entity : chunk.getEntities()) {
+                if (entity instanceof final LootableEntityInventory lootableEntity && entity.getPersistentDataContainer().has(LOOT_TABLE, PersistentDataType.STRING)) {
+                    NBT.modify(entity, nbt -> {
+                        nbt.removeKey("Items");
+                    });
+                    lootableEntity.setLootTable(Bukkit.getLootTable(NamespacedKey.fromString(entity.getPersistentDataContainer().get(LOOT_TABLE, PersistentDataType.STRING))));
                 }
             }
         }
