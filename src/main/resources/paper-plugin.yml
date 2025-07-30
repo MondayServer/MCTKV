@@ -17,5 +17,6 @@ dependencies:
       load: BEFORE
     Multiverse-Core:
       load: BEFORE
+    PlaceholderAPI:
+      load: BEFORE
 description: The annihilation
-website: https://fireworksstudio.github.io

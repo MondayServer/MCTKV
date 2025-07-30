@@ -1,6 +1,7 @@
 package me.paperxiang.theannihilation.utils;
 import java.time.Duration;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -10,6 +11,7 @@ import me.paperxiang.theannihilation.TheAnnihilation;
 import net.kyori.adventure.chat.ChatType;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TranslationArgument;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.title.Title;
@@ -19,6 +21,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.scheduler.BukkitTask;
 public final class Mission {
     private MissionStage stage = MissionStage.STARTUP;
     private int startTime;
@@ -33,9 +36,13 @@ public final class Mission {
         this.id = id;
         this.map = map;
         this.worldHost = worldHost;
+        mapSidebarComponent = Component.translatable("sidebar.mission.map", TranslationArgument.component(Component.translatable("map." + map)));
     }
     public void loadWorld() {
         world = worldHost.load().orElseThrow();
+    }
+    public String getMap() {
+        return map;
     }
     public void start() {
         stage = MissionStage.IN_PROGRESS;
@@ -48,7 +55,14 @@ public final class Mission {
             player.showTitle(Title.title(Component.text("任务开始"), Component.empty(), Title.Times.times(Duration.ofMillis(250), Duration.ofMillis(2250), Duration.ofMillis(500))));
         }
         startTime = Bukkit.getCurrentTick();
-        Bukkit.getScheduler().runTaskLater(TheAnnihilation.getInstance(), this::endMission, timeLimit);
+        final BukkitTask task = Bukkit.getScheduler().runTaskTimer(TheAnnihilation.getInstance(), () -> {
+            final int ticksLeft = startTime + timeLimit - Bukkit.getCurrentTick();
+            timeSidebarComponent = Component.translatable("sidebar.mission.time", TranslationArgument.component(Component.text(String.format((Locale) null, "%1$02d:%2$02d", ticksLeft / 1200, ticksLeft / 20 % 60))));
+        }, 1, 20);
+        Bukkit.getScheduler().runTaskLater(TheAnnihilation.getInstance(), () -> {
+            task.cancel();
+            endMission();
+        }, timeLimit);
     }
     public boolean completeMission(UUID uuid) {
         final Player player = Bukkit.getPlayer(uuid);
@@ -114,6 +128,14 @@ public final class Mission {
     }
     public static void fina() {
         activeMissions.forEach(Mission::endMission);
+    }
+    private final Component mapSidebarComponent;
+    private Component timeSidebarComponent = Component.empty();
+    public Component mapSidebarComponent() {
+        return mapSidebarComponent;
+    }
+    public Component timeSidebarComponent() {
+        return timeSidebarComponent;
     }
     @Override
     public boolean equals(Object obj) {

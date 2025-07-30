@@ -41,7 +41,24 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <artifactSet>
+                        <excludes>
+                            <exclude>com.google.code.gson:gson</exclude>
+                            <exclude>com.google.code.gson:gson</exclude>
+                            <exclude>com.google.errorprone:error_prone_annotations</exclude>
+                            <exclude>org.jspecify:jspecify</exclude>
+                            <exclude>net.kyori:*</exclude>
+                        </excludes>
+                    </artifactSet>
                     <relocations>
+                        <relocation>
+                            <pattern>org.intellij.lang.annotations</pattern>
+                            <shadedPattern>me.paperxiang.shaded.ijannotations</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>org.jetbrains.annotations</pattern>
+                            <shadedPattern>me.paperxiang.shaded.jbannotations</shadedPattern>
+                        </relocation>
                         <relocation>
                             <pattern>net.megavex.scoreboardlibrary</pattern>
                             <shadedPattern>me.paperxiang.shaded.scoreboardlibrary</shadedPattern>
@@ -96,6 +113,10 @@
             <id>onarandombodx</id>
             <url>https://repo.onarandombox.com/content/groups/public/</url>
         </repository>
+        <repository>
+            <id>placeholderapi</id>
+            <url>https://repo.extendedclip.com/releases/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -133,7 +154,7 @@
             <artifactId>scoreboard-library-modern</artifactId>
             <version>2.4.0</version>
             <scope>runtime</scope>
-            <!-- <classifier>mojmap</classifier> -->
+            <classifier>mojmap</classifier>
         </dependency>
         <dependency>
             <groupId>net.citizensnpcs</groupId>
@@ -168,6 +189,12 @@
             <groupId>org.mvplugins.multiverse.core</groupId>
             <artifactId>multiverse-core</artifactId>
             <version>5.0.0-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>me.clip</groupId>
+            <artifactId>placeholderapi</artifactId>
+            <version>2.11.6</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

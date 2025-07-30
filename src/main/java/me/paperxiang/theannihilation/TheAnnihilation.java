@@ -7,9 +7,12 @@ import me.paperxiang.theannihilation.listeners.InventoryListener;
 import me.paperxiang.theannihilation.listeners.MissionListener;
 import me.paperxiang.theannihilation.listeners.PlayerListener;
 import me.paperxiang.theannihilation.listeners.WorldListener;
+import me.paperxiang.theannihilation.utils.ComponentUtils;
 import me.paperxiang.theannihilation.utils.InventoryUtils;
 import me.paperxiang.theannihilation.utils.Mission;
+import me.paperxiang.theannihilation.utils.ScoreboardUtils;
 import me.paperxiang.theannihilation.utils.Utils;
+import net.momirealms.craftengine.core.plugin.CraftEngine;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.slf4j.Logger;
 public final class TheAnnihilation extends JavaPlugin {
@@ -24,9 +27,11 @@ public final class TheAnnihilation extends JavaPlugin {
     @Override
     public void onEnable() {
         FastInvManager.register(this);
+        ComponentUtils.init();
         I18n.init();
         TATranslator.init();
         Utils.init();
+        ScoreboardUtils.init();
         InventoryUtils.init();
         CombatListener.init();
         InventoryListener.init();
@@ -38,6 +43,7 @@ public final class TheAnnihilation extends JavaPlugin {
     @Override
     public void onDisable() {
         Mission.fina();
+        ScoreboardUtils.fina();
         instance = null;
         logInfo("TheAnnihilation finalized.");
     }

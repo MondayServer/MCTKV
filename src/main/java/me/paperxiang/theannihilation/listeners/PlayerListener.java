@@ -1,8 +1,12 @@
 package me.paperxiang.theannihilation.listeners;
+import com.destroystokyo.paper.profile.PlayerProfile;
+import com.destroystokyo.paper.profile.ProfileProperty;
+import java.util.Optional;
 import java.util.UUID;
 import me.paperxiang.theannihilation.TheAnnihilation;
 import me.paperxiang.theannihilation.utils.InventoryUtils;
 import me.paperxiang.theannihilation.utils.Mission;
+import me.paperxiang.theannihilation.utils.ScoreboardUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -20,7 +24,9 @@ public final class PlayerListener implements Listener {
     }
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerJoin(PlayerJoinEvent event) {
-        InventoryUtils.init(event.getPlayer());
+        final Player player = event.getPlayer();
+        InventoryUtils.init(player);
+        ScoreboardUtils.init(player);
     }
     @EventHandler
     public void on(PlayerChatEvent event) {
@@ -41,7 +47,8 @@ public final class PlayerListener implements Listener {
     public void onPlayerQuit(PlayerQuitEvent event) {
         final Player player = event.getPlayer();
         final UUID uuid = player.getUniqueId();
-        Mission.getMission(uuid).removePlayer(uuid);
+        ScoreboardUtils.fina(player);
+        Optional.ofNullable(Mission.getMission(uuid)).ifPresent(mission -> mission.removePlayer(uuid));
         InventoryUtils.fina(player);
     }
 }
