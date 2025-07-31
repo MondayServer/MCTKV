@@ -18,10 +18,13 @@ public final class WorldListener implements Listener {
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerSpawnLocationEvent(PlayerSpawnLocationEvent event) {
         event.setSpawnLocation(Utils.HUB);
+        enteredNewWorld(event.getPlayer());
     }
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerChangedWorldEvent(PlayerChangedWorldEvent event) {
-        final Player player = event.getPlayer();
+        enteredNewWorld(event.getPlayer());
+    }
+    private void enteredNewWorld(Player player) {
         player.setGameMode(GameMode.ADVENTURE);
         player.clearActivePotionEffects();
         player.clearActiveItem();

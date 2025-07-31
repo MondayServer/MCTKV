@@ -1,11 +1,9 @@
 package me.paperxiang.theannihilation.listeners;
-import com.destroystokyo.paper.profile.PlayerProfile;
-import com.destroystokyo.paper.profile.ProfileProperty;
 import java.util.Optional;
 import java.util.UUID;
 import me.paperxiang.theannihilation.TheAnnihilation;
 import me.paperxiang.theannihilation.utils.InventoryUtils;
-import me.paperxiang.theannihilation.utils.Mission;
+import me.paperxiang.theannihilation.mission.Mission;
 import me.paperxiang.theannihilation.utils.ScoreboardUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

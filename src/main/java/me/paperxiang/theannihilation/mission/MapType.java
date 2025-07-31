@@ -1,4 +1,4 @@
-package me.paperxiang.theannihilation.utils;
+package me.paperxiang.theannihilation.mission;
 public enum MapType {
     UNDERGROUND("underground"), SURFACE("surface"), NETHER("nether");
     private final String id;

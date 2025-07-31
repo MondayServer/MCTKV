@@ -4,7 +4,7 @@ import io.papermc.paper.event.entity.EntityPortalReadyEvent;
 import java.util.Optional;
 import me.paperxiang.theannihilation.TheAnnihilation;
 import me.paperxiang.theannihilation.utils.ComponentUtils;
-import me.paperxiang.theannihilation.utils.Mission;
+import me.paperxiang.theannihilation.mission.Mission;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;

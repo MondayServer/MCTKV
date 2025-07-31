@@ -14,6 +14,8 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
 import me.paperxiang.theannihilation.TheAnnihilation;
+import me.paperxiang.theannihilation.mission.MapInfo;
+import me.paperxiang.theannihilation.mission.MapType;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.GameRule;

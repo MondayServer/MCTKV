@@ -3,6 +3,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import me.paperxiang.theannihilation.TheAnnihilation;
+import me.paperxiang.theannihilation.mission.Mission;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TranslationArgument;
 import net.megavex.scoreboardlibrary.api.ScoreboardLibrary;

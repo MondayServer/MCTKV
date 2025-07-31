@@ -1,0 +1,31 @@
+select_mission:
+  entity-type: evoker
+  name: <lang:npc.select_mission>
+  equipment:
+    HAND: "minecraft:heavy_core"
+    OFF_HAND: "minecraft:totem_of_undying[enchantment_glint_override=true]"
+  location:
+    world: world
+    x: 7.5
+    y: 18.0
+    z: 0.5
+    yaw: 90.0
+    pitch: 0.0
+lobby:
+  entity-type: player
+  name: <lang_or:npc.lobby>
+  skin:
+    signature: gwwKHcH6RlIpJpOMJjZr+LAgS3fmSo5QMn6E2OIfh8uKivS1kGuCoDjncF5o+J+kVAcC4F6NLegqyWwUlQyALahERaeoGCVfQEniEIN0xA8uGfvwkgWZ2M2MOYjZJg0a8Th4VXfDRc/950BIQOxw+prPhStdNsLJ4FHyGT8BLHHDEwzvPFRNs/TZUzb+ou35m37wxINr0FVieXjBlA1uRxcy/1LBqWrdfFYTq7AxQErBaVAaudSLtZRpC/fnCTqMCC+Uy8Cc3kC55xryswia5k7sKoWQ4VwV25fMhM8pATpguzvRYpAua6/X05RsovmFA1WqQpwZfn6eWE8yDcfIclcAdnbTGhlBksuPBR7fn4NzPupJ7dtUYuYm0RUw1rb6QfC+kV3LAGkgaYCNRYMVyeXuZlxVHaDcWYeCjZYI8zYIF1eo/uOmDVoquAinnJgEgEKcyhcTnuoB96rHxu0QRuhcp8dZ2f0ui67DrHofEVvKWkIpkeUHSZy6Q8BbKpHnBXR+qRIwUS96BR533hqmS2hxaJfO8xONQ7B6R9J/pNC3odWv8A1cjZKcJenB2FIu9dXSyUb2vUaDCSkZhJ7mpkRQq0wqbM4KxrEucAEEIM4PEqodqaMltokqSLkxYq74K4Hzni9kvw0/ld65gxtTafrFHtxcufQuQvh+6ZQON24=
+    texture: ewogICJ0aW1lc3RhbXAiIDogMTc1MTM0NjEyNzY2OCwKICAicHJvZmlsZUlkIiA6ICJjYjQ5OTJlOTgzZGI0N2E5OGNjOGEwY2U2Y2RhNjY4MiIsCiAgInByb2ZpbGVOYW1lIiA6ICJQYXBlcl9YaWFuZyIsCiAgInNpZ25hdHVyZVJlcXVpcmVkIiA6IHRydWUsCiAgInRleHR1cmVzIiA6IHsKICAgICJTS0lOIiA6IHsKICAgICAgInVybCIgOiAiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS84MjUzNWFhMjkwMGM5NDJkZWFkNjc1NThmZGUwZmQyYzRlZGQxNWYzMDU3ZDk0ZDVlMmM0N2Y5OGQzMjBlZTQ2IgogICAgfSwKICAgICJDQVBFIiA6IHsKICAgICAgInVybCIgOiAiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS81YzI5NDEwMDU3ZTMyYWJlYzAyZDg3MGVjYjUyZWMyNWZiNDVlYTgxZTc4NWE3ODU0YWU4NDI5ZDcyMzZjYTI2IgogICAgfQogIH0KfQ==
+  equipment:
+    HAND: "minecraft:diamond_pickaxe[enchantment_glint_override=true]"
+    OFF_HAND: "minecraft:compass[enchantment_glint_override=true]"
+    CHESTPLATE: "minecraft:chainmail_chestplate[trim={material:\"minecraft:gold\",pattern:\"minecraft:raiser\"}]"
+    BOOTS: "minecraft:chainmail_boots[trim={material:\"minecraft:gold\",pattern:\"minecraft:raiser\"}]"
+  location:
+    world: world
+    x: 2.7
+    y: 14.0
+    z: -1.7
+    yaw: 45.0
+    pitch: 0.0

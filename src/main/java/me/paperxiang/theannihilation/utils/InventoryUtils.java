@@ -16,6 +16,7 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import me.paperxiang.theannihilation.TheAnnihilation;
+import me.paperxiang.theannihilation.mission.Mission;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

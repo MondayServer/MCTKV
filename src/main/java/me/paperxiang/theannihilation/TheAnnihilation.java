@@ -5,14 +5,15 @@ import me.paperxiang.theannihilation.i18n.TATranslator;
 import me.paperxiang.theannihilation.listeners.CombatListener;
 import me.paperxiang.theannihilation.listeners.InventoryListener;
 import me.paperxiang.theannihilation.listeners.MissionListener;
+import me.paperxiang.theannihilation.listeners.NPCListener;
 import me.paperxiang.theannihilation.listeners.PlayerListener;
 import me.paperxiang.theannihilation.listeners.WorldListener;
 import me.paperxiang.theannihilation.utils.ComponentUtils;
 import me.paperxiang.theannihilation.utils.InventoryUtils;
-import me.paperxiang.theannihilation.utils.Mission;
+import me.paperxiang.theannihilation.mission.Mission;
+import me.paperxiang.theannihilation.utils.NPCUtils;
 import me.paperxiang.theannihilation.utils.ScoreboardUtils;
 import me.paperxiang.theannihilation.utils.Utils;
-import net.momirealms.craftengine.core.plugin.CraftEngine;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.slf4j.Logger;
 public final class TheAnnihilation extends JavaPlugin {
@@ -33,15 +34,18 @@ public final class TheAnnihilation extends JavaPlugin {
         Utils.init();
         ScoreboardUtils.init();
         InventoryUtils.init();
+        NPCUtils.init();
         CombatListener.init();
         InventoryListener.init();
         MissionListener.init();
+        NPCListener.init();
         PlayerListener.init();
         WorldListener.init();
         logInfo("TheAnnihilation initialized.");
     }
     @Override
     public void onDisable() {
+        NPCUtils.fina();
         Mission.fina();
         ScoreboardUtils.fina();
         instance = null;

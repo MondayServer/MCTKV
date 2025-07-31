@@ -72,7 +72,6 @@ public final class ComponentUtils {
         private Placeholders() {}
         @Override
         public @Nullable String onRequest(OfflinePlayer player, @NotNull String params) {
-            System.out.println("Parsing " + params);
             final Matcher progressBarPlaceholderMatcher = PROGRESS_BAR_PLACEHOLDER.matcher(params);
             if (progressBarPlaceholderMatcher.matches()) {
                 final String progressBarString = progressBarPlaceholderMatcher.group(1);
