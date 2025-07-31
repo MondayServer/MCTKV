@@ -16,3 +16,7 @@ TheAnnihilation is designed to support a minimal of Paper 1.21.6, Java 21.
   - Build from the [dev branch](https://github.com/Xiao-MoMi/craft-engine/tree/dev)
 - [Multiverse](https://hangar.papermc.io/Multiverse/Multiverse-Core/versions)
 - [PlaceholderAPI](https://ci.extendedclip.com/job/PlaceholderAPI/)
+### Miscellaneous
+Add `-Dnet.megavex.scoreboardlibrary.forceModern=true` to the server's startup flags.
+
+Ensure `world.enforce-gamemode` is set to `false` in Multiverse's configuration.
