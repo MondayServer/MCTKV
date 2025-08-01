@@ -1,0 +1,21 @@
+{
+  "values": [
+    "#minecraft:damages_helmet",
+    "#minecraft:is_drowning",
+    "#minecraft:is_explosion",
+    "#minecraft:is_fall",
+    "#minecraft:is_lightning",
+    "#minecraft:is_player_attack",
+    "#minecraft:is_projectile",
+    "#minecraft:is_projectile",
+    "minecraft:cactus",
+    "minecraft:cramming",
+    "minecraft:fly_into_wall",
+    "minecraft:mob_attack",
+    "minecraft:mob_attack_no_aggro",
+    "minecraft:spit",
+    "minecraft:sting",
+    "minecraft:sweet_berry_bush",
+    "minecraft:thorns"
+  ]
+}

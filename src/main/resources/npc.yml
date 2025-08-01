@@ -1,6 +1,21 @@
+target_dummy_0:
+  entity-type: armor_stand
+  name: <lang:npc.target_dummy.name>
+  equipment:
+    HELMET: "minecraft:hay_block"
+    CHESTPLATE: "minecraft:leather_chestplate[dyed_color=11513600,trim={material:\"minecraft:redstone\",pattern:\"minecraft:wayfinder\"},unbreakable={}]"
+    LEGGINGS: "minecraft:leather_leggings[dyed_color=11513600,trim={material:\"minecraft:redstone\",pattern:\"minecraft:wayfinder\"},unbreakable={}]"
+    BOOTS: "minecraft:leather_boots[dyed_color=11513600,trim={material:\"minecraft:redstone\",pattern:\"minecraft:wayfinder\"},unbreakable={}]"
+  location:
+    world: world
+    x: 0.5
+    y: 19.0
+    z: -5.5
+    yaw: 0.0
+    pitch: 0.0
 select_mission:
   entity-type: evoker
-  name: <lang:npc.select_mission>
+  name: <lang:npc.select_mission.name>
   equipment:
     HAND: "minecraft:heavy_core"
     OFF_HAND: "minecraft:totem_of_undying[enchantment_glint_override=true]"
@@ -13,7 +28,7 @@ select_mission:
     pitch: 0.0
 lobby:
   entity-type: player
-  name: <lang_or:npc.lobby>
+  name: <lang:npc.lobby.name>
   skin:
     signature: gwwKHcH6RlIpJpOMJjZr+LAgS3fmSo5QMn6E2OIfh8uKivS1kGuCoDjncF5o+J+kVAcC4F6NLegqyWwUlQyALahERaeoGCVfQEniEIN0xA8uGfvwkgWZ2M2MOYjZJg0a8Th4VXfDRc/950BIQOxw+prPhStdNsLJ4FHyGT8BLHHDEwzvPFRNs/TZUzb+ou35m37wxINr0FVieXjBlA1uRxcy/1LBqWrdfFYTq7AxQErBaVAaudSLtZRpC/fnCTqMCC+Uy8Cc3kC55xryswia5k7sKoWQ4VwV25fMhM8pATpguzvRYpAua6/X05RsovmFA1WqQpwZfn6eWE8yDcfIclcAdnbTGhlBksuPBR7fn4NzPupJ7dtUYuYm0RUw1rb6QfC+kV3LAGkgaYCNRYMVyeXuZlxVHaDcWYeCjZYI8zYIF1eo/uOmDVoquAinnJgEgEKcyhcTnuoB96rHxu0QRuhcp8dZ2f0ui67DrHofEVvKWkIpkeUHSZy6Q8BbKpHnBXR+qRIwUS96BR533hqmS2hxaJfO8xONQ7B6R9J/pNC3odWv8A1cjZKcJenB2FIu9dXSyUb2vUaDCSkZhJ7mpkRQq0wqbM4KxrEucAEEIM4PEqodqaMltokqSLkxYq74K4Hzni9kvw0/ld65gxtTafrFHtxcufQuQvh+6ZQON24=
     texture: ewogICJ0aW1lc3RhbXAiIDogMTc1MTM0NjEyNzY2OCwKICAicHJvZmlsZUlkIiA6ICJjYjQ5OTJlOTgzZGI0N2E5OGNjOGEwY2U2Y2RhNjY4MiIsCiAgInByb2ZpbGVOYW1lIiA6ICJQYXBlcl9YaWFuZyIsCiAgInNpZ25hdHVyZVJlcXVpcmVkIiA6IHRydWUsCiAgInRleHR1cmVzIiA6IHsKICAgICJTS0lOIiA6IHsKICAgICAgInVybCIgOiAiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS84MjUzNWFhMjkwMGM5NDJkZWFkNjc1NThmZGUwZmQyYzRlZGQxNWYzMDU3ZDk0ZDVlMmM0N2Y5OGQzMjBlZTQ2IgogICAgfSwKICAgICJDQVBFIiA6IHsKICAgICAgInVybCIgOiAiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS81YzI5NDEwMDU3ZTMyYWJlYzAyZDg3MGVjYjUyZWMyNWZiNDVlYTgxZTc4NWE3ODU0YWU4NDI5ZDcyMzZjYTI2IgogICAgfQogIH0KfQ==

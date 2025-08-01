@@ -11,6 +11,8 @@ import java.util.EnumMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
 import me.paperxiang.theannihilation.TheAnnihilation;
@@ -29,6 +31,7 @@ import org.bukkit.block.BlockState;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.loot.LootTable;
 import org.bukkit.loot.Lootable;
@@ -44,6 +47,10 @@ public final class Utils {
     private static final EnumMap<MapType, ConcurrentHashMap<String, MapInfo>> maps = new EnumMap<>(MapType.class);
     private Utils() {}
     public static void init() {
+        Bukkit.getScheduler().runTaskTimer(TheAnnihilation.getInstance(), () -> {
+            maximumNoDamageTicksModifiedMarked.stream().map(Bukkit::getEntity).filter(Objects::nonNull).map(entity -> (LivingEntity) entity).forEach(entity -> entity.setMaximumNoDamageTicks(0));
+            maximumNoDamageTicksModifiedMarked.clear();
+        }, 1, 1);
         final World world = Bukkit.getWorld("world");
         world.setSimulationDistance(2);
         world.setViewDistance(2);
@@ -127,6 +134,10 @@ public final class Utils {
             }
         }
         return chunks;
+    }
+    private static final HashSet<UUID> maximumNoDamageTicksModifiedMarked = new HashSet<>();
+    public static void markMaximumNoDamageTicksModified(UUID uuid) {
+        maximumNoDamageTicksModifiedMarked.add(uuid);
     }
     public static boolean isEmpty(ItemStack itemStack) {
         return itemStack == null || itemStack.isEmpty();

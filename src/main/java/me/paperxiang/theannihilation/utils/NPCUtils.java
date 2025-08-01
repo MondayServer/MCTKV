@@ -11,18 +11,23 @@ import net.citizensnpcs.api.trait.Trait;
 import net.citizensnpcs.api.trait.TraitInfo;
 import net.citizensnpcs.api.trait.TraitName;
 import net.citizensnpcs.api.trait.trait.Equipment;
+import net.citizensnpcs.trait.ArmorStandTrait;
 import net.citizensnpcs.trait.SkinTrait;
+import net.citizensnpcs.trait.versioned.PotionEffectsTrait;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 public final class NPCUtils {
-    private static NPCRegistry transientNPCs;
+    public static NPCRegistry transientNPCs;
     private NPCUtils() {}
     public static void init() {
         CitizensAPI.getTraitFactory().registerTrait(TraitInfo.create(ClickActionTrait.class));
+        CitizensAPI.getTraitFactory().registerTrait(TraitInfo.create(TargetDummyTrait.class));
         transientNPCs = CitizensAPI.createInMemoryNPCRegistry("server_npcs");
         final HashMap<String, NPC> npcs = new HashMap<>();
         final YamlConfiguration NPCsConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(TheAnnihilation.getInstance().getResource("npc.yml"), StandardCharsets.UTF_8));
@@ -44,6 +49,11 @@ public final class NPCUtils {
                 npc.spawn(Location.deserialize(data.getConfigurationSection("location").getValues(false)));
             }
         });
+        final NPC targetDummy = npcs.get("target_dummy_0");
+        targetDummy.getOrAddTrait(ArmorStandTrait.class).setHasBaseplate(false);
+        targetDummy.getOrAddTrait(TargetDummyTrait.class);
+        //targetDummy.setProtected(false);
+        //targetDummy.getOrAddTrait(PotionEffectsTrait.class).addEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, -1, 31, false, false, false));
         final NPC selectMissionNPC = npcs.get("select_mission");
         selectMissionNPC.getOrAddTrait(ClickActionTrait.class).setAction(player -> player.chat("start"));
         selectMissionNPC.data().set(NPC.Metadata.USING_HELD_ITEM, true);
@@ -64,6 +74,12 @@ public final class NPCUtils {
         }
         public void run(Player player) {
             action.accept(player);
+        }
+    }
+    @TraitName("target_dummy")
+    public static final class TargetDummyTrait extends Trait {
+        public TargetDummyTrait() {
+            super("target_dummy");
         }
     }
 }
