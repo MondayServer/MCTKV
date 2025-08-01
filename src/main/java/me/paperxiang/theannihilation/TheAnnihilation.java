@@ -7,6 +7,7 @@ import me.paperxiang.theannihilation.listeners.InventoryListener;
 import me.paperxiang.theannihilation.listeners.MissionListener;
 import me.paperxiang.theannihilation.listeners.NPCListener;
 import me.paperxiang.theannihilation.listeners.PlayerListener;
+import me.paperxiang.theannihilation.listeners.RangedListener;
 import me.paperxiang.theannihilation.listeners.WorldListener;
 import me.paperxiang.theannihilation.utils.ComponentUtils;
 import me.paperxiang.theannihilation.utils.InventoryUtils;
@@ -40,6 +41,7 @@ public final class TheAnnihilation extends JavaPlugin {
         MissionListener.init();
         NPCListener.init();
         PlayerListener.init();
+        RangedListener.init();
         WorldListener.init();
         logInfo("TheAnnihilation initialized.");
     }

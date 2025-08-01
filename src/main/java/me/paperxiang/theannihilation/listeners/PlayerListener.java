@@ -5,6 +5,7 @@ import me.paperxiang.theannihilation.TheAnnihilation;
 import me.paperxiang.theannihilation.utils.InventoryUtils;
 import me.paperxiang.theannihilation.mission.Mission;
 import me.paperxiang.theannihilation.utils.ScoreboardUtils;
+import me.paperxiang.theannihilation.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -23,6 +24,7 @@ public final class PlayerListener implements Listener {
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerJoin(PlayerJoinEvent event) {
         final Player player = event.getPlayer();
+        Utils.init(player);
         InventoryUtils.init(player);
         ScoreboardUtils.init(player);
     }

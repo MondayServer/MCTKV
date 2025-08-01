@@ -43,6 +43,7 @@ public final class Mission {
     }
     public void loadWorld() {
         world = worldHost.load().orElseThrow();
+        Utils.configure(world, true);
     }
     public String getMap() {
         return map;

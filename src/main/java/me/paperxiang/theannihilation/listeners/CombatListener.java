@@ -39,7 +39,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 public final class CombatListener implements Listener {
     @SuppressWarnings("UnstableApiUsage")
-    private static final Tag<BlockType> PROJECTILE_BREAKS = RegistryAccess.registryAccess().getRegistry(RegistryKey.BLOCK).getTag(BlockTypeTagKeys.create(Key.key("the_annihilation", "projectile_breaks")));
+    private static final Tag<BlockType> PROJECTILE_SHATTERS = RegistryAccess.registryAccess().getRegistry(RegistryKey.BLOCK).getTag(BlockTypeTagKeys.create(Key.key("the_annihilation", "projectile_shatters")));
     @SuppressWarnings("UnstableApiUsage")
     private static final Tag<DamageType> INTERRUPTS_CONSUMPTION = RegistryAccess.registryAccess().getRegistry(RegistryKey.DAMAGE_TYPE).getTag(DamageTypeTagKeys.create(Key.key("the_annihilation", "interrupts_consumption")));
     @SuppressWarnings("UnstableApiUsage")
@@ -52,14 +52,8 @@ public final class CombatListener implements Listener {
     @SuppressWarnings("UnstableApiUsage")
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onProjectileHit(ProjectileHitEvent event) {
-        if (event.getEntity() instanceof ThrowableProjectile) {
-            if (event.getHitEntity() instanceof final LivingEntity living) {
-                final Vector v = event.getEntity().getVelocity();
-                living.knockback(1, -v.getX(), -v.getZ());
-            }
-        }
         final Block block = event.getHitBlock();
-        if (block != null && PROJECTILE_BREAKS.contains(TypedKey.create(RegistryKey.BLOCK, block.getType().getKey()))) {
+        if (block != null && PROJECTILE_SHATTERS.contains(TypedKey.create(RegistryKey.BLOCK, block.getType().getKey()))) {
             Utils.connected(block, switch (event.getEntityType()) {
                 case ARROW, SPECTRAL_ARROW, TRIDENT -> 4;
                 case EGG, ENDER_PEARL, LLAMA_SPIT, SNOWBALL -> 1;
